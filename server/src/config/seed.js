@@ -242,76 +242,78 @@ async function seed() {
   // We need ~$6.49 more from historical aggregate events
   // Strategy: spread ~50 historical events with varied costs over 10-14 days
   // Daily targets (to look natural on a chart): $0.30-$0.80/day
+  // Historical events scaled so total spend across all seed data ≈ $6.50 (65% of $10 budget).
+  // 28 historical send events sum to ~$6.46, plus 28 inbox_pulls ($0.006) + 10 real sends ($0.01) ≈ $6.48
   const historicalEvents = [
     // Day 14
-    { event_type: 'send', channel: 'email', cost: 0.42, description: 'Email sent to alice@test.com', created_at: daysAgo(14, 8) },
+    { event_type: 'send', channel: 'email', cost: 0.24, description: 'Email sent to alice@test.com', created_at: daysAgo(14, 8) },
     { event_type: 'inbox_pull', channel: 'system', cost: 0.0002, description: 'Inbox polled', created_at: daysAgo(14, 8) },
-    { event_type: 'send', channel: 'email', cost: 0.28, description: 'Email sent to bob@company.co', created_at: daysAgo(14, 15) },
+    { event_type: 'send', channel: 'email', cost: 0.16, description: 'Email sent to bob@company.co', created_at: daysAgo(14, 15) },
     { event_type: 'inbox_pull', channel: 'system', cost: 0.0002, description: 'Inbox polled', created_at: daysAgo(14, 15) },
     // Day 13
-    { event_type: 'send', channel: 'email', cost: 0.55, description: 'Email sent to dev@startup.com', created_at: daysAgo(13, 9) },
+    { event_type: 'send', channel: 'email', cost: 0.32, description: 'Email sent to dev@startup.com', created_at: daysAgo(13, 9) },
     { event_type: 'inbox_pull', channel: 'system', cost: 0.0002, description: 'Inbox polled', created_at: daysAgo(13, 9) },
-    { event_type: 'send', channel: 'email', cost: 0.31, description: 'Email sent to ops@bigcorp.net', created_at: daysAgo(13, 16) },
+    { event_type: 'send', channel: 'email', cost: 0.18, description: 'Email sent to ops@bigcorp.net', created_at: daysAgo(13, 16) },
     { event_type: 'inbox_pull', channel: 'system', cost: 0.0002, description: 'Inbox polled', created_at: daysAgo(13, 16) },
     // Day 12
-    { event_type: 'send', channel: 'email', cost: 0.48, description: 'Email sent to alice@test.com', created_at: daysAgo(12, 10) },
+    { event_type: 'send', channel: 'email', cost: 0.28, description: 'Email sent to alice@test.com', created_at: daysAgo(12, 10) },
     { event_type: 'inbox_pull', channel: 'system', cost: 0.0002, description: 'Inbox polled', created_at: daysAgo(12, 10) },
-    { event_type: 'send', channel: 'email', cost: 0.22, description: 'Email sent to hello@example.org', created_at: daysAgo(12, 14) },
+    { event_type: 'send', channel: 'email', cost: 0.13, description: 'Email sent to hello@example.org', created_at: daysAgo(12, 14) },
     { event_type: 'inbox_pull', channel: 'system', cost: 0.0002, description: 'Inbox polled', created_at: daysAgo(12, 14) },
     // Day 11
-    { event_type: 'send', channel: 'email', cost: 0.63, description: 'Email sent to support@acme.io', created_at: daysAgo(11, 9) },
+    { event_type: 'send', channel: 'email', cost: 0.37, description: 'Email sent to support@acme.io', created_at: daysAgo(11, 9) },
     { event_type: 'inbox_pull', channel: 'system', cost: 0.0002, description: 'Inbox polled', created_at: daysAgo(11, 9) },
-    { event_type: 'send', channel: 'email', cost: 0.37, description: 'Email sent to bob@company.co', created_at: daysAgo(11, 15) },
+    { event_type: 'send', channel: 'email', cost: 0.21, description: 'Email sent to bob@company.co', created_at: daysAgo(11, 15) },
     { event_type: 'inbox_pull', channel: 'system', cost: 0.0002, description: 'Inbox polled', created_at: daysAgo(11, 15) },
     // Day 10
-    { event_type: 'send', channel: 'email', cost: 0.51, description: 'Email sent to dev@startup.com', created_at: daysAgo(10, 11) },
+    { event_type: 'send', channel: 'email', cost: 0.30, description: 'Email sent to dev@startup.com', created_at: daysAgo(10, 11) },
     { event_type: 'inbox_pull', channel: 'system', cost: 0.0002, description: 'Inbox polled', created_at: daysAgo(10, 11) },
-    { event_type: 'send', channel: 'email', cost: 0.29, description: 'Email sent to alice@test.com', created_at: daysAgo(10, 17) },
+    { event_type: 'send', channel: 'email', cost: 0.17, description: 'Email sent to alice@test.com', created_at: daysAgo(10, 17) },
     { event_type: 'inbox_pull', channel: 'system', cost: 0.0002, description: 'Inbox polled', created_at: daysAgo(10, 17) },
     // Day 9
-    { event_type: 'send', channel: 'email', cost: 0.44, description: 'Email sent to hello@example.org', created_at: daysAgo(9, 9) },
+    { event_type: 'send', channel: 'email', cost: 0.26, description: 'Email sent to hello@example.org', created_at: daysAgo(9, 9) },
     { event_type: 'inbox_pull', channel: 'system', cost: 0.0002, description: 'Inbox polled', created_at: daysAgo(9, 9) },
-    { event_type: 'send', channel: 'email', cost: 0.36, description: 'Email sent to ops@bigcorp.net', created_at: daysAgo(9, 14) },
+    { event_type: 'send', channel: 'email', cost: 0.21, description: 'Email sent to ops@bigcorp.net', created_at: daysAgo(9, 14) },
     { event_type: 'inbox_pull', channel: 'system', cost: 0.0002, description: 'Inbox polled', created_at: daysAgo(9, 14) },
     // Day 8
-    { event_type: 'send', channel: 'email', cost: 0.58, description: 'Email sent to support@acme.io', created_at: daysAgo(8, 10) },
+    { event_type: 'send', channel: 'email', cost: 0.34, description: 'Email sent to support@acme.io', created_at: daysAgo(8, 10) },
     { event_type: 'inbox_pull', channel: 'system', cost: 0.0002, description: 'Inbox polled', created_at: daysAgo(8, 10) },
-    { event_type: 'send', channel: 'email', cost: 0.32, description: 'Email sent to bob@company.co', created_at: daysAgo(8, 16) },
+    { event_type: 'send', channel: 'email', cost: 0.19, description: 'Email sent to bob@company.co', created_at: daysAgo(8, 16) },
     { event_type: 'inbox_pull', channel: 'system', cost: 0.0002, description: 'Inbox polled', created_at: daysAgo(8, 16) },
     // Day 7
-    { event_type: 'send', channel: 'email', cost: 0.47, description: 'Email sent to dev@startup.com', created_at: daysAgo(7, 9) },
+    { event_type: 'send', channel: 'email', cost: 0.27, description: 'Email sent to dev@startup.com', created_at: daysAgo(7, 9) },
     { event_type: 'inbox_pull', channel: 'system', cost: 0.0002, description: 'Inbox polled', created_at: daysAgo(7, 9) },
-    { event_type: 'send', channel: 'email', cost: 0.33, description: 'Email sent to alice@test.com', created_at: daysAgo(7, 15) },
+    { event_type: 'send', channel: 'email', cost: 0.19, description: 'Email sent to alice@test.com', created_at: daysAgo(7, 15) },
     { event_type: 'inbox_pull', channel: 'system', cost: 0.0002, description: 'Inbox polled', created_at: daysAgo(7, 15) },
     // Day 6
-    { event_type: 'send', channel: 'email', cost: 0.52, description: 'Email sent to hello@example.org', created_at: daysAgo(6, 11) },
+    { event_type: 'send', channel: 'email', cost: 0.30, description: 'Email sent to hello@example.org', created_at: daysAgo(6, 11) },
     { event_type: 'inbox_pull', channel: 'system', cost: 0.0002, description: 'Inbox polled', created_at: daysAgo(6, 11) },
-    { event_type: 'send', channel: 'email', cost: 0.28, description: 'Email sent to ops@bigcorp.net', created_at: daysAgo(6, 16) },
+    { event_type: 'send', channel: 'email', cost: 0.16, description: 'Email sent to ops@bigcorp.net', created_at: daysAgo(6, 16) },
     { event_type: 'inbox_pull', channel: 'system', cost: 0.0002, description: 'Inbox polled', created_at: daysAgo(6, 16) },
     // Day 5
-    { event_type: 'send', channel: 'email', cost: 0.61, description: 'Email sent to support@acme.io', created_at: daysAgo(5, 10) },
+    { event_type: 'send', channel: 'email', cost: 0.35, description: 'Email sent to support@acme.io', created_at: daysAgo(5, 10) },
     { event_type: 'inbox_pull', channel: 'system', cost: 0.0002, description: 'Inbox polled', created_at: daysAgo(5, 10) },
-    { event_type: 'send', channel: 'email', cost: 0.19, description: 'Email sent to bob@company.co', created_at: daysAgo(5, 15) },
+    { event_type: 'send', channel: 'email', cost: 0.11, description: 'Email sent to bob@company.co', created_at: daysAgo(5, 15) },
     { event_type: 'inbox_pull', channel: 'system', cost: 0.0002, description: 'Inbox polled', created_at: daysAgo(5, 15) },
     // Day 4
-    { event_type: 'send', channel: 'email', cost: 0.43, description: 'Email sent to dev@startup.com', created_at: daysAgo(4, 9) },
+    { event_type: 'send', channel: 'email', cost: 0.25, description: 'Email sent to dev@startup.com', created_at: daysAgo(4, 9) },
     { event_type: 'inbox_pull', channel: 'system', cost: 0.0002, description: 'Inbox polled', created_at: daysAgo(4, 9) },
-    { event_type: 'send', channel: 'email', cost: 0.37, description: 'Email sent to alice@test.com', created_at: daysAgo(4, 14) },
+    { event_type: 'send', channel: 'email', cost: 0.21, description: 'Email sent to alice@test.com', created_at: daysAgo(4, 14) },
     { event_type: 'inbox_pull', channel: 'system', cost: 0.0002, description: 'Inbox polled', created_at: daysAgo(4, 14) },
     // Day 3
-    { event_type: 'send', channel: 'email', cost: 0.49, description: 'Email sent to hello@example.org', created_at: daysAgo(3, 10) },
+    { event_type: 'send', channel: 'email', cost: 0.28, description: 'Email sent to hello@example.org', created_at: daysAgo(3, 10) },
     { event_type: 'inbox_pull', channel: 'system', cost: 0.0002, description: 'Inbox polled', created_at: daysAgo(3, 10) },
-    { event_type: 'send', channel: 'email', cost: 0.31, description: 'Email sent to ops@bigcorp.net', created_at: daysAgo(3, 16) },
+    { event_type: 'send', channel: 'email', cost: 0.18, description: 'Email sent to ops@bigcorp.net', created_at: daysAgo(3, 16) },
     { event_type: 'inbox_pull', channel: 'system', cost: 0.0002, description: 'Inbox polled', created_at: daysAgo(3, 16) },
     // Day 2
-    { event_type: 'send', channel: 'email', cost: 0.38, description: 'Email sent to support@acme.io', created_at: daysAgo(2, 11) },
+    { event_type: 'send', channel: 'email', cost: 0.22, description: 'Email sent to support@acme.io', created_at: daysAgo(2, 11) },
     { event_type: 'inbox_pull', channel: 'system', cost: 0.0002, description: 'Inbox polled', created_at: daysAgo(2, 11) },
-    { event_type: 'send', channel: 'email', cost: 0.26, description: 'Email sent to bob@company.co', created_at: daysAgo(2, 15) },
+    { event_type: 'send', channel: 'email', cost: 0.15, description: 'Email sent to bob@company.co', created_at: daysAgo(2, 15) },
     { event_type: 'inbox_pull', channel: 'system', cost: 0.0002, description: 'Inbox polled', created_at: daysAgo(2, 15) },
     // Day 1
-    { event_type: 'send', channel: 'email', cost: 0.44, description: 'Email sent to dev@startup.com', created_at: daysAgo(1, 9) },
+    { event_type: 'send', channel: 'email', cost: 0.26, description: 'Email sent to dev@startup.com', created_at: daysAgo(1, 9) },
     { event_type: 'inbox_pull', channel: 'system', cost: 0.0002, description: 'Inbox polled', created_at: daysAgo(1, 9) },
-    { event_type: 'send', channel: 'email', cost: 0.30, description: 'Email sent to alice@test.com', created_at: daysAgo(1, 14) },
+    { event_type: 'send', channel: 'email', cost: 0.17, description: 'Email sent to alice@test.com', created_at: daysAgo(1, 14) },
     { event_type: 'inbox_pull', channel: 'system', cost: 0.0002, description: 'Inbox polled', created_at: daysAgo(1, 14) },
   ];
 
