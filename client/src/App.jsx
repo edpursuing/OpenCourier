@@ -1,14 +1,11 @@
 import './index.css';
 import { useActivityFeed } from './hooks/useActivityFeed';
+import AppShell from './components/layout/AppShell';
 
 function App() {
   useActivityFeed();
 
-  return (
-    <div className="min-h-screen bg-bg text-text-primary font-mono flex items-center justify-center">
-      <h1 className="text-accent text-2xl font-bold">OpenCourier</h1>
-    </div>
-  );
+  return <AppShell />;
 }
 
 export default App;
