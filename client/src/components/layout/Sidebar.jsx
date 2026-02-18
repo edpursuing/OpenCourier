@@ -1,4 +1,5 @@
 import useStore from '../../store/useStore';
+import DevToolsPanel from '../shared/DevToolsPanel';
 
 const NAV_ITEMS = [
   { screen: 'send', label: 'Send', icon: '↑' },
@@ -57,6 +58,7 @@ export default function Sidebar() {
           </span>
           <span>{showActivityPanel ? 'Hide Feed' : 'Show Feed'}</span>
         </button>
+        <DevToolsPanel />
       </div>
     </aside>
   );
