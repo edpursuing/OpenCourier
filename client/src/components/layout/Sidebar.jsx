@@ -15,7 +15,7 @@ export default function Sidebar() {
   const setRateCardModal = useStore((s) => s.setRateCardModal);
 
   return (
-    <aside className="w-[220px] min-h-screen bg-sidebar border-r border-border flex flex-col shrink-0">
+    <aside className="w-[220px] h-screen flex flex-col shrink-0 bg-sidebar border-r border-border sticky top-0">
       {/* Logo */}
       <div className="px-4 py-5 border-b border-border">
         <span className="text-accent font-bold text-lg font-mono tracking-tight">OpenCourier</span>

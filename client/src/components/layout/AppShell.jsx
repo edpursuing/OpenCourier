@@ -29,7 +29,7 @@ export default function AppShell() {
   const showBudgetModal = useStore((s) => s.showBudgetModal);
 
   return (
-    <div className="flex min-h-screen bg-bg font-mono">
+    <div className="flex h-screen overflow-hidden bg-bg font-mono">
       <Sidebar />
       <main className="flex-1 overflow-y-auto p-8">
         <ActiveScreen screen={activeScreen} />

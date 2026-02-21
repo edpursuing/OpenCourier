@@ -26,8 +26,16 @@ const useStore = create((set) => ({
     budgetPercent: billing.budgetPercent,
     alerts: billing.alerts || [],
   }),
+  // Bulk load from initial API fetch — array already sorted DESC by server
+  setActivityEvents: (events) => set({
+    activityEvents: events.slice(0, 100),
+    sessionTotal: events.reduce((sum, e) => sum + (e.cost || 0), 0),
+  }),
+  // Single event from Realtime — prepend then re-sort to guarantee order
   addActivityEvent: (event) => set((state) => ({
-    activityEvents: [event, ...state.activityEvents].slice(0, 100),
+    activityEvents: [event, ...state.activityEvents]
+      .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+      .slice(0, 100),
     sessionTotal: state.sessionTotal + (event.cost || 0),
   })),
   setScreen: (screen) => set({ activeScreen: screen }),
