@@ -81,7 +81,7 @@ export default function InboxView() {
             disabled={loading}
             className="bg-accent text-white font-bold font-mono text-sm px-4 py-2 rounded-lg hover:bg-accent/90 transition-colors disabled:opacity-50 cursor-pointer"
           >
-            {loading ? 'Fetching...' : 'Pull Inbox'}
+            {loading ? 'Fetching...' : 'Check Inbox'}
           </button>
         </div>
       </div>
