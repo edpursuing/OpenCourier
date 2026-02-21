@@ -1,6 +1,7 @@
 import { useState, useCallback } from 'react';
 import useStore from '../../store/useStore';
 import { api } from '../../lib/api';
+import { supabase } from '../../lib/supabaseClient';
 import { RATES } from '../../lib/constants';
 import ChannelSelector from './ChannelSelector';
 import RecentSends from './RecentSends';
@@ -36,10 +37,32 @@ export default function SendConsole() {
       // Update billing state
       updateBilling(res.billing);
       // Add to recent sends
-      setRecentSends((prev) => [
-        { ...res.message, recipient },
-        ...prev,
-      ].slice(0, 20));
+      const newMessage = { ...res.message, recipient };
+      setRecentSends((prev) => [newMessage, ...prev].slice(0, 20));
+
+      // Poll Supabase for status updates — server updates DB at 1s and 3.5s
+      const messageId = res.message.id;
+      const deadline = Date.now() + 6000;
+      const pollInterval = setInterval(async () => {
+        if (Date.now() > deadline) {
+          clearInterval(pollInterval);
+          return;
+        }
+        const { data } = await supabase
+          .from('messages')
+          .select('id, status')
+          .eq('id', messageId)
+          .single();
+        if (data) {
+          setRecentSends((prev) =>
+            prev.map((m) => m.id === messageId ? { ...m, status: data.status } : m)
+          );
+          if (data.status === 'delivered' || data.status === 'failed') {
+            clearInterval(pollInterval);
+          }
+        }
+      }, 1000);
+
       // Clear form
       setRecipient('');
       setSubject('');
