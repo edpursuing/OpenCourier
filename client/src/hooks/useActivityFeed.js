@@ -5,11 +5,12 @@ import useStore from '../store/useStore';
 
 export function useActivityFeed() {
   const addActivityEvent = useStore((s) => s.addActivityEvent);
+  const setActivityEvents = useStore((s) => s.setActivityEvents);
 
   useEffect(() => {
-    // Initial load
+    // Initial load — use bulk set so server's DESC sort order is preserved
     api.getActivity().then((data) => {
-      data.events?.forEach((event) => addActivityEvent(event));
+      if (data.events?.length) setActivityEvents(data.events);
     }).catch(() => {
       // Backend not available yet — silently ignore
     });

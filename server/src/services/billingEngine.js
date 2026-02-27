@@ -87,7 +87,7 @@ async function processInboxPull() {
       event_type: 'inbox_pull',
       channel: 'system',
       cost: rates.RATE_INBOX_PULL,
-      description: 'Inbox polled',
+      description: 'Inbox checked',
     });
   if (error) throw error;
   return { pullCost: rates.RATE_INBOX_PULL };

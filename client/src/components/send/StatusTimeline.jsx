@@ -2,10 +2,9 @@ const STAGES = [
   { key: 'queued', label: 'Q', title: 'Queued' },
   { key: 'sent', label: 'S', title: 'Sent' },
   { key: 'delivered', label: 'D', title: 'Delivered' },
-  { key: 'read', label: 'R', title: 'Read' },
 ];
 
-const STATUS_ORDER = { queued: 0, sent: 1, delivered: 2, read: 3 };
+const STATUS_ORDER = { queued: 0, sent: 1, delivered: 2 };
 
 function getStageState(stageKey, currentStatus) {
   if (currentStatus === 'failed') return 'failed';

@@ -11,7 +11,7 @@ export default function ApiEndpointBar({ activeFilter }) {
         <span className="text-text-muted">{endpoint}</span>
       </div>
       <span className="text-text-dim text-xs font-mono">
-        <span className="text-success">${RATES.inbox_pull.toFixed(4)}</span> per pull
+        <span className="text-success">${RATES.inbox_pull.toFixed(4)}</span> per check
       </span>
     </div>
   );
